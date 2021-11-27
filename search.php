@@ -23,7 +23,10 @@
             <?php
                     if (isset($_POST['submit'])) {
                     $search = $_POST['search'];
-                    
+                    // replace special characters
+                    $search = str_replace(' ', '-', $search); // Replaces all spaces with hyphens.
+                    $search = preg_replace('/[^A-Za-z0-9\-]/', '', $search); // Removes special chars.
+
                     $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' ";
                     $search_query = mysqli_query($connection, $query);
 
