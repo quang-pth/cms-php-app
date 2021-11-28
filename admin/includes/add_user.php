@@ -8,7 +8,7 @@
         // $post_image_temp = $_FILES['image']['tmp_name'];
 
         $username = santizeData($_POST['username']);
-        $user_email = santizeData($_POST['user_email']);
+        $user_email = trim(preg_replace('/[^A-Za-z0-9@.\-]/', '', $_POST['user_email']));
         $user_password = santizeData($_POST['user_password']);
 
         // store image 
