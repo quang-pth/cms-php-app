@@ -1,11 +1,11 @@
 <?php 
-    include "includes/header.php"
+    include "./includes/admin_header.php"
 ?>
 
     <div id="wrapper">
         <!-- Navigation -->
         <?php 
-            include "includes/nav.php"
+            include "./includes/admin_nav.php"
         ?>
 
         <div id="page-wrapper">
@@ -28,5 +28,5 @@
         <!-- /#page-wrapper -->
 
 <?php 
-    include "includes/footer.php"
+    include "includes/admin_footer.php"
 ?>
