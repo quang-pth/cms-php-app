@@ -54,7 +54,7 @@
                     $exist = true;
                 }
                 if(!$exist) {
-                    echo "<td>Related POST is DELETED or NOT EXIST</td>";
+                    echo "<td>DELETED or NOT EXIST</td>";
                 }
                 
                 echo "<td>$comment_date</td>";
