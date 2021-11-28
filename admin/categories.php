@@ -48,12 +48,16 @@
                                     <input class="btn btn-primary" type="submit" name="submit" value="Add Category">
                                 </div>
                             </form>
+                            
+                            <?php 
+                                if(isset($_GET['edit'])) {
+                                    $cat_id = $_GET['edit'];
+                                    include "includes/update_category.php";
+                                }
+                            ?>
+
                         </div> <!-- Add Category -->
                         <div class="col-xs-6">
-                            <?php 
-                                $query = "SELECT * FROM categories";
-                                $select_categories = mysqli_query($connection, $query);
-                            ?>
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -73,6 +77,7 @@
                                             echo "<td>{$cat_id}</td>";
                                             echo "<td>{$cat_title}</td>";
                                             echo "<td><a href='categories.php?delete={$cat_id}'>Delete</a></td>";
+                                            echo "<td><a href='categories.php?edit={$cat_id}'>Edit</a></td>";
                                             echo "</tr>";
                                         }
                                     ?>
@@ -98,5 +103,5 @@
         <!-- /#page-wrapper -->
 
 <?php 
-    include "includes/admin_footer.php"
+    include "includes/admin_footer.php";
 ?>
