@@ -80,7 +80,7 @@
                                 <a href="./posts.php">View All Posts</a>
                             </li>
                             <li>
-                                <a href="#">Add New Post</a>
+                                <a href="./add_post.php">Add New Post</a>
                             </li>
                         </ul>
                     </li>
