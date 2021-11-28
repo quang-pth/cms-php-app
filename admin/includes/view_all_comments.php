@@ -46,10 +46,15 @@
                 
                 $query = "SELECT * FROM posts WHERE post_id = $comment_post_id";
                 $select_post_id_query = mysqli_query($connection, $query);
+                $exist = false; // comment related-post
                 while ($row = mysqli_fetch_assoc($select_post_id_query)) {
                     $post_id = $row['post_id'];
                     $post_title = $row['post_title'];
                     echo "<td><a href='../post.php?p_id=$post_id'>$post_title</td>";
+                    $exist = true;
+                }
+                if(!$exist) {
+                    echo "<td>Related POST is DELETED or NOT EXIST</td>";
                 }
                 
                 echo "<td>$comment_date</td>";
