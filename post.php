@@ -72,7 +72,7 @@
                     $comment_content = santizeData($_POST['comment_content']); 
 
                     $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
-                    $query .= "VALUES ($post_id, '{$comment_author}', '{$comment_email}', '$comment_content}', 'unapproved', now())";
+                    $query .= "VALUES ($post_id, '{$comment_author}', '{$comment_email}', '$comment_content', 'unapproved', now())";
                     
                     $create_comment_query = mysqli_query($connection, $query);
                     confirmQuery($create_comment_query);
