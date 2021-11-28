@@ -53,13 +53,29 @@
                 }
                 
                 echo "<td>$comment_date</td>";
-                echo "<td><a href='posts.php?source=edit_post&p_id='>Approve</a></td>";
-                echo "<td><a href='posts.php?delete='>Unapprove</a></td>";
+                echo "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";
+                echo "<td><a href='comments.php?unapprove=$comment_id'>Unapprove</a></td>";
                 echo "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";
                 echo "</tr>";
             }
         ?>
         <?php 
+            if(isset($_GET['approve'])) {
+                $comment_id_to_approve = santizeData($_GET['approve']);
+                $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = {$comment_id_to_approve} ";
+                $approve_query = mysqli_query($connection, $query);
+                confirmQuery($approve_query);
+                header("Location: comments.php");
+            }
+
+            if(isset($_GET['unapprove'])) {
+                $comment_id_to_unapprove = santizeData($_GET['unapprove']);
+                $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = {$comment_id_to_unapprove} ";
+                $unapprove_query = mysqli_query($connection, $query);
+                confirmQuery($unapprove_query);
+                header("Location: comments.php");
+            }
+
             if(isset($_GET['delete'])) {
                 $comment_id_to_delete = santizeData($_GET['delete']);
                 $query = "DELETE FROM comments WHERE comment_id = {$comment_id_to_delete} ";
