@@ -56,3 +56,7 @@ function deleteCategories() {
         header("Location: categories.php"); // refresh page
     }
 }
+
+function santizeData($data) {
+    return trim(preg_replace('/[^A-Za-z0-9 \-]/', '', $data));
+}

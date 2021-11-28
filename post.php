@@ -32,12 +32,11 @@
             <!-- First Blog Post -->
             <?php 
                 if(isset($_GET['p_id'])) {
-                    $post_id_to_view = preg_replace('/[^A-Za-z0-9 \-]/', '', $_GET['p_id']);
-                }
-
-                $query = "SELECT * FROM posts WHERE post_id = $post_id_to_view";
-                $select_post_query = mysqli_query($connection, $query);
-                confirmQuery($select_post_query);
+                    $post_id_to_view = santizeData($_GET['p_id']);
+                    
+                    $query = "SELECT * FROM posts WHERE post_id = $post_id_to_view";
+                    $select_post_query = mysqli_query($connection, $query);
+                    confirmQuery($select_post_query);
                     while($row = mysqli_fetch_assoc($select_post_query)) {
                         $post_title = $row['post_title'];
                         $post_author = $row['post_author'];
@@ -59,20 +58,43 @@
                         <p><?php echo $post_content ?></p>
                         <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                         <hr>            
-                    <?php
+                        <?php
+                    }
                     }
             ?>
 
             <!-- Blog Comments -->
+            <?php 
+                if (isset($_POST['create_comment'])) {
+                    $post_id = $_GET['p_id'];
+                    $comment_author = santizeData($_POST['comment_author']); 
+                    $comment_email = santizeData($_POST['comment_email']); 
+                    $comment_content = santizeData($_POST['comment_content']); 
 
+                    $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
+                    $query .= "VALUES ($post_id, '{$comment_author}', '{$comment_email}', '$comment_content}', 'unapproved', now())";
+                    
+                    $create_comment_query = mysqli_query($connection, $query);
+                    confirmQuery($create_comment_query);
+                }
+            ?>
                 <!-- Comments Form -->
                 <div class="well">
                     <h4>Leave a Comment:</h4>
-                    <form role="form">
+                    <form role="form" action="post.php?p_id=<?php echo $post_id_to_view ?>" method="post">
                         <div class="form-group">
-                            <textarea class="form-control" rows="3"></textarea>
+                            <label for="Author">Author</label>
+                            <input id="Author" type="text" class="form-control" rows="3" name="comment_author">
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="form-group">
+                            <label for="Email">Email</label>
+                            <input type="email" id="Email" class="form-control" rows="3" name="comment_email">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Your comment</label>
+                            <textarea id="comment" name="comment_content" class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" name="create_comment" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
 
