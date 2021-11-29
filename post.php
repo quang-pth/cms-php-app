@@ -56,7 +56,6 @@
                         <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
                         <hr>
                         <p><?php echo $post_content ?></p>
-                        <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                         <hr>            
                         <?php
                     }
@@ -84,11 +83,11 @@
                     <form role="form" action="post.php?p_id=<?php echo $post_id_to_view ?>" method="post">
                         <div class="form-group">
                             <label for="Author">Author</label>
-                            <input id="Author" type="text" class="form-control" rows="3" name="comment_author">
+                            <input id="Author" type="text" class="form-control" rows="3" name="comment_author" required>
                         </div>
                         <div class="form-group">
                             <label for="Email">Email</label>
-                            <input type="email" id="Email" class="form-control" rows="3" name="comment_email">
+                            <input type="email" id="Email" class="form-control" rows="3" name="comment_email" required>
                         </div>
                         <div class="form-group">
                             <label for="comment">Your comment</label>

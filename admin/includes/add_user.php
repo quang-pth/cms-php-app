@@ -19,17 +19,19 @@
 
         $create_user_query = mysqli_query($connection, $query);
         confirmQuery($create_user_query);
+
+        echo "User Created: " . " " . "<a href='users.php'>View Users</a>";
     }
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="title">Firstname</label>
-        <input type="text" class="form-control" name="user_firstname">
+        <input type="text" class="form-control" name="user_firstname" required>
     </div>
     <div class="form-group">
         <label for="title">Lastname</label>
-        <input type="text" class="form-control" name="user_lastname">
+        <input type="text" class="form-control" name="user_lastname" required>
     </div>
     <select name="user_role" id="">
         <option value="subscriber">Select Options</option>
@@ -43,15 +45,15 @@
     </div> -->
     <div class="form-group">
         <label for="">Username</label>
-        <input type="text" class="form-control" name="username">
+        <input type="text" class="form-control" name="username" required>
     </div>
     <div class="form-group">
         <label for="">Email</label>
-        <input type="text" class="form-control" name="user_email">
+        <input type="text" class="form-control" name="user_email" required>
     </div>
     <div class="form-group">
         <label for="">Password</label>
-        <input type="password" class="form-control" name="user_password">
+        <input type="password" class="form-control" name="user_password" required>
     </div>
     <div class="form-group">
         <input class="btn btn-primary" type="submit" name="create_user" value="Add User">
