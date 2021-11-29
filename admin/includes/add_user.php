@@ -51,7 +51,7 @@
     </div>
     <div class="form-group">
         <label for="">Password</label>
-        <input type="text" class="form-control" name="user_password">
+        <input type="password" class="form-control" name="user_password">
     </div>
     <div class="form-group">
         <input class="btn btn-primary" type="submit" name="create_user" value="Add User">
