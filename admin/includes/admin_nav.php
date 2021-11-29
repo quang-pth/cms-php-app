@@ -15,7 +15,36 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
                     <ul class="dropdown-menu message-dropdown">
-                        <li class="message-preview">
+                        <?php 
+                            $query = "SELECT * FROM messages";
+                            $select_all_messages = mysqli_query($connection, $query);
+                            confirmQuery($select_all_messages);
+
+                            while ($row = mysqli_fetch_assoc($select_all_messages)) {
+                                $message_author = $row['message_author_email'];
+                                $created_at = $row['created_at'];
+                                $message_content = substr($row['message_content'], 0, 40);
+                             ?>
+                                <li class="message-preview">
+                                <a href="#">
+                                    <div class="media">
+                                        <span class="pull-left">
+                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                        </span>
+                                        <div class="media-body">
+                                            <h5 class="media-heading">
+                                                <strong><?php echo $message_author ?></strong>
+                                            </h5>
+                                            <p class="small text-muted"><i class="fa fa-clock-o"></i><?php echo $created_at ?></p>
+                                            <p><?php echo $message_content ?>...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                             <?php 
+                            }
+                        ?>
+                        <!-- <li class="message-preview">
                             <a href="#">
                                 <div class="media">
                                     <span class="pull-left">
@@ -30,21 +59,34 @@
                                     </div>
                                 </div>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="message-footer">
-                            <a href="#">Read All New Messages</a>
+                            <a href="messages.php?source=view_all_messages">Read All New Messages</a>
                         </li>
                     </ul>
                 </li>
+                <!-- View All News Unapproved Comments -->
+                <?php 
+                    $query = "SELECT * FROM comments WHERE comment_status = 'unapproved' ORDER BY comment_id DESC";
+                    $select_unapproved_comments = mysqli_query($connection, $query);
+                    confirmQuery($select_unapproved_comments);
+                ?>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
                     <ul class="dropdown-menu alert-dropdown">
-                        <li>
+                        <?php 
+                            while ($row = mysqli_fetch_assoc($select_unapproved_comments)) {
+                                echo "<li>";
+                                echo "<a href='#'>Unapproved Comments From: <span class='label label-primary'>{$row['comment_author']}</span></a>";
+                                echo "</li>";   
+                            }
+                        ?>
+                        <!-- <li>
                             <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
+                        </li> -->
                         <li class="divider"></li>
                         <li>
-                            <a href="#">View All</a>
+                            <a href="comments.php">View All</a>
                         </li>
                     </ul>
                 </li>
