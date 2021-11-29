@@ -33,6 +33,23 @@
         <!-- /.input-group -->
     </div>
 
+    <!-- FEEDBACK Form -->
+    <div class="well">
+        <h4>Give Us Your Feedback</h4>
+        <form action="includes/send_feedback.php" method="post">
+            <div class="form-group">
+                <input name="message_author_email" type="email" class="form-control" placeholder="Enter Your Email" required>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" name="message_content" id="" cols="30" rows="10" placeholder="Enter Your Feedback" required></textarea>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" name="feedback" type="submit">Send</button>
+            </div>
+        </form> <!-- Form Search -->
+        <!-- /.input-group -->
+    </div>
+
     <!-- Blog Categories Well -->
     <div class="well">
         <?php 

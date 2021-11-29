@@ -16,7 +16,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
                     <ul class="dropdown-menu message-dropdown">
                         <?php 
-                            $query = "SELECT * FROM messages";
+                            $query = "SELECT * FROM messages WHERE message_status = 0";
                             $select_all_messages = mysqli_query($connection, $query);
                             confirmQuery($select_all_messages);
 

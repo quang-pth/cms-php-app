@@ -58,5 +58,5 @@ function deleteCategories() {
 }
 
 function santizeData($data) {
-    return trim(preg_replace('/[^A-Za-z0-9 \-]/', '', $data));
+    return trim(preg_replace('/[^A-Za-z0-9 @.\-]/', '', $data));
 }
