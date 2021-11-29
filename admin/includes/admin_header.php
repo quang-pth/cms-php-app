@@ -3,11 +3,22 @@
 ?>
 
 <?php 
+    session_start();
+?>
+
+<?php 
     include "functions.php"
 ?>
 
 <?php 
     include "includes/db.php";
+?>
+
+<!-- only admin can access admin page -->
+<?php 
+    if(!isset($_SESSION['user_role'])) {
+        header("Location: ../index.php");
+    }
 ?>
 
 <!DOCTYPE html>
