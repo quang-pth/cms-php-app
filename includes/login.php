@@ -13,7 +13,7 @@
         $username = mysqli_real_escape_string($connection, $username); 
         $password = mysqli_real_escape_string($connection, $password); 
 
-        $query = "SELECT * FROM users WHERE username = '{$username}' ";
+        $query = "SELECT * FROM users WHERE username = '{$username}'";
         $select_user_query = mysqli_query($connection, $query);
         confirmQuery($select_user_query);
 
@@ -32,6 +32,7 @@
             $_SESSION['firstname'] = $db_user_firstname;
             $_SESSION['lastname'] = $db_user_lastname;
             $_SESSION['user_role'] = $db_user_role;
+            $_SESSION['user_token'] = md5(uniqid());
             header("Location: ../admin");
         } else {
             header("Location: ../index.php");

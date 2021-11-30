@@ -31,6 +31,14 @@
                 <li>
                     <a href="registration.php">Registration</a>
                 </li>
+                <?php 
+                    if(isset($_SESSION['user_token'])) {
+                        ?>
+                        <li>
+                            <a href="includes/logout.php">Logout</a>
+                        </li>
+                    <?php }
+                ?>
                 <?php
                     if(isset($_SESSION['user_role'])) {
                         if(isset($_GET['p_id'])) {
