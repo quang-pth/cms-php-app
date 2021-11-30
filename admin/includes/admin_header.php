@@ -15,8 +15,8 @@
 ?>
 
 <!-- only admin can access admin page -->
-<?php 
-    if(!isset($_SESSION['user_role'])) {
+<?php
+    if(isset($_SESSION['user_role']) === 'admin') {
         header("Location: ../index.php");
     }
 ?>

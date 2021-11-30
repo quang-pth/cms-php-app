@@ -11,7 +11,7 @@
         $post_tags = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_tags']));
         $post_content = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_content']));
         $post_date = date('d-m-y');
-        $post_comment_count = 4;
+        $post_comment_count = 0;
 
         // store image 
         move_uploaded_file($post_image_temp, "../images/$post_image");
@@ -21,6 +21,10 @@
 
         $create_post_query = mysqli_query($connection, $query);
         confirmQuery($create_post_query);
+        // get lastest post id to redirect user
+        $created_post_id = mysqli_insert_id($connection);
+
+        echo "<p class='bg-success'>Post Created. <a href='../post.php?p_id={$created_post_id}'>View Post</a> or <a href='posts.php'>Edit More Posts</a> </p>";
     }
 ?>
 
@@ -49,8 +53,12 @@
         <input type="text" class="form-control" name="author">
     </div>
     <div class="form-group">
-        <label for="post_status">Post Status</label>
-        <input type="text" class="form-control" name="post_status">
+        <label for="post_status">Post Status: </label>
+        <select name="post_status" id="post_status">
+            <option value="draft" selected disabled>Selection Options</option>
+            <option value="published">Publish</option>
+            <option value="draft">Draft</option>
+        </select>        
     </div>
     <div class="form-group">
         <label for="post_image">Post Image</label>

@@ -85,7 +85,8 @@
         <input type="text" class="form-control" name="author" value="<?php echo $post_author; ?>">
     </div>
     <div class="form-group">
-        <select name="post_status" id="">
+        <label for="post_status">Post Status: </label>
+        <select name="post_status" id="post_status">
             <option value="<?php echo $post_status; ?>"><?php echo ucfirst($post_status) ?></option>
             <?php 
                 if($post_status == 'published') {
