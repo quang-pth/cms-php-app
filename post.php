@@ -56,7 +56,6 @@
                         <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
                         <hr>
                         <p><?php echo $post_content ?></p>
-                        <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                         <hr>            
                         <?php
                     }
@@ -71,11 +70,19 @@
                     $comment_email = santizeData($_POST['comment_email']); 
                     $comment_content = santizeData($_POST['comment_content']); 
 
-                    $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
-                    $query .= "VALUES ($post_id, '{$comment_author}', '{$comment_email}', '$comment_content', 'unapproved', now())";
-                    
-                    $create_comment_query = mysqli_query($connection, $query);
-                    confirmQuery($create_comment_query);
+                    if(!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
+                        $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
+                        $query .= "VALUES ($post_id, '{$comment_author}', '{$comment_email}', '$comment_content', 'unapproved', now())";
+                        
+                        $create_comment_query = mysqli_query($connection, $query);
+                        confirmQuery($create_comment_query);
+                        // increase post comment count
+                        $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = $post_id";
+                        $increase_comment_count_query = mysqli_query($connection, $query);
+                        confirmQuery($increase_comment_count_query);
+                    } else {
+                        echo "<script>alert('Fields cannot be empty')</script>";
+                    }
                 }
             ?>
                 <!-- Comments Form -->
@@ -84,15 +91,15 @@
                     <form role="form" action="post.php?p_id=<?php echo $post_id_to_view ?>" method="post">
                         <div class="form-group">
                             <label for="Author">Author</label>
-                            <input id="Author" type="text" class="form-control" rows="3" name="comment_author">
+                            <input id="Author" type="text" class="form-control" rows="3" name="comment_author" required>
                         </div>
                         <div class="form-group">
                             <label for="Email">Email</label>
-                            <input type="email" id="Email" class="form-control" rows="3" name="comment_email">
+                            <input type="email" id="Email" class="form-control" rows="3" name="comment_email" required>
                         </div>
                         <div class="form-group">
                             <label for="comment">Your comment</label>
-                            <textarea id="comment" name="comment_content" class="form-control" rows="3"></textarea>
+                            <textarea id="comment" name="comment_content" class="form-control" rows="3" required></textarea>
                         </div>
                         <button type="submit" name="create_comment" class="btn btn-primary">Submit</button>
                     </form>

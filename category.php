@@ -36,7 +36,15 @@
                     $post_image = $row['post_image'];
                     $post_content = substr($row['post_content'], 0, 100);
                     
-                    ?>         
+                    ?>
+                    <h1 class="page-header">
+                        <?php 
+                            $query = "SELECT * FROM categories WHERE cat_id = $post_category_id LIMIT 1";
+                            $select_category = mysqli_query($connection, $query);
+                            echo mysqli_fetch_assoc($select_category)['cat_title'];
+                        ?>
+                        <small>Enjoy our posts</small>
+                    </h1>
                     <h2>
                         <a href="post.php?p_id=<?php echo $post_id ?>"><?php echo $post_title ?></a>
                     </h2>
@@ -49,7 +57,7 @@
                     <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
                     <hr>
                     <p><?php echo $post_content ?></p>
-                    <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                     <hr>            
                 <?php
                 }

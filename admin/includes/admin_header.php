@@ -3,11 +3,22 @@
 ?>
 
 <?php 
+    session_start();
+?>
+
+<?php 
     include "functions.php"
 ?>
 
 <?php 
     include "includes/db.php";
+?>
+
+<!-- only admin can access admin page -->
+<?php
+    if(isset($_SESSION['user_role']) === 'admin') {
+        header("Location: ../index.php");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +48,12 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="css/summernote.css"> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
 </head>
         
 <body>

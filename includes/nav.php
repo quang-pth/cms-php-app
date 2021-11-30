@@ -13,27 +13,29 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <?php 
-                    $query = "SELECT * FROM categories";
-                    $select_all_categories_query = mysqli_query($connection, $query);
+                <!-- <?php 
+                    // $query = "SELECT * FROM categories";
+                    // $select_all_categories_query = mysqli_query($connection, $query);
                     
-                    while($row = mysqli_fetch_assoc($select_all_categories_query)) {
-                        $cat_title = $row['cat_title'];
-                        echo "<li><a href='#'>{$cat_title}</a></li>";
-                    }
+                    // while($row = mysqli_fetch_assoc($select_all_categories_query)) {
+                    //     $cat_title = $row['cat_title'];
+                    //     echo "<li><a href='#'>{$cat_title}</a></li>";
+                    // }
 
                 
-                ?>
+                ?>\ -->
 
                 <li>
                     <a href="admin">Admin</a>
                 </li>
-                <!-- <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li> -->
+                <?php
+                    if(isset($_SESSION['user_role'])) {
+                        if(isset($_GET['p_id'])) {
+                            $post_id_to_edit = $_GET['p_id'];
+                            echo "<li><a href='admin/posts.php?source=edit_post&p_id={$post_id_to_edit}'>Edit Post</a></li>";
+                        }
+                    }
+                ?>
             </ul>
         </div>
         <!-- /.navbar-collapse -->

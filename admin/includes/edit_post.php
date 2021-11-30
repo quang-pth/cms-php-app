@@ -54,6 +54,8 @@
 
         $update_post = mysqli_query($connection, $query);
         confirmQuery($update_post);
+        
+        echo "<p class='bg-success'>Post Updated. <a href='../post.php?p_id={$post_id_to_edit}'>View Post</a> or <a href='posts.php'>Edit More Posts</a> </p>";
     }   
 
 ?>
@@ -83,9 +85,23 @@
         <input type="text" class="form-control" name="author" value="<?php echo $post_author; ?>">
     </div>
     <div class="form-group">
+        <label for="post_status">Post Status: </label>
+        <select name="post_status" id="post_status">
+            <option value="<?php echo $post_status; ?>"><?php echo ucfirst($post_status) ?></option>
+            <?php 
+                if($post_status == 'published') {
+                    echo "<option value='draft'>Draft</option>";
+                } else {
+                    echo "<option value='published'>Publish</option>";
+                }
+            ?>
+        </select>
+    </div>
+
+    <!-- <div class="form-group">
         <label for="post_status">Post Status</label>
         <input type="text" class="form-control" name="post_status" value="<?php echo $post_status; ?>">
-    </div>
+    </div> -->
     <div class="form-group">
         <img style="width: 100px;" src="../images/<?php echo $post_image ?>" alt="Post Image">
         <input type="file" class="form-control" name="image">
@@ -97,8 +113,7 @@
     </div>
     <div class="form-group">
         <label for="post_content">Post Content</label>
-        <textarea class="form-control" name="post_content" id="" cols="30" rows="10">
-            <?php echo $post_content; ?>
+        <textarea class="form-control" name="post_content" id="summernote" cols="30" rows="10"><?php echo $post_content; ?>
         </textarea>
     </div>
     <div class="form-group">
