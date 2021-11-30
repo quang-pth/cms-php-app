@@ -33,6 +33,10 @@
             <?php 
                 if(isset($_GET['p_id'])) {
                     $post_id_to_view = santizeData($_GET['p_id']);
+
+                    $view_query = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE post_id = $post_id_to_view";
+                    $send_query = mysqli_query($connection, $view_query);
+                    confirmQuery($send_query);
                     
                     $query = "SELECT * FROM posts WHERE post_id = $post_id_to_view";
                     $select_post_query = mysqli_query($connection, $query);
@@ -58,8 +62,10 @@
                         <p><?php echo $post_content ?></p>
                         <hr>            
                         <?php
-                    }
-                    }
+                    } 
+                } else {
+                    header("Location: index.php");
+                }
             ?>
 
             <!-- Blog Comments -->
