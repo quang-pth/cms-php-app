@@ -21,7 +21,7 @@
                 confirmQuery($select_randsalt_query);
 
                 $row = mysqli_fetch_array($select_randsalt_query);
-                $salt = $row['randSalt'];
+                $salt = $row['randSalt'] ? $row['randSalt'] : '$2y$10$iusesomecrazystrings22';
                 
                 // encrypt password with salt
                 $password = crypt($password, $salt);
