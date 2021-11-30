@@ -11,11 +11,18 @@
         $user_email = trim(preg_replace('/[^A-Za-z0-9@.\-]/', '', $_POST['user_email']));
         $user_password = santizeData($_POST['user_password']);
 
+        $query = "SELECT randSalt FROM users LIMIT 1";
+        $select_randsalt_query = mysqli_query($connection, $query);
+        confirmQuery($select_randsalt_query);
+        $row = mysqli_fetch_array($select_randsalt_query);
+        $salt = $row['randSalt'];
+        $hashed_password = crypt($user_password, $salt);
+
         // store image 
         // move_uploaded_file($post_image_temp, "../images/$post_image");
         $query = "INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, user_password) ";
 
-        $query .= " VALUES('{$user_firstname}', '{$user_lastname}',  '{$user_role}', '{$username}', '{$user_email}', '{$user_password}') ";
+        $query .= " VALUES('{$user_firstname}', '{$user_lastname}',  '{$user_role}', '{$username}', '{$user_email}', '{$hashed_password}') ";
 
         $create_user_query = mysqli_query($connection, $query);
         confirmQuery($create_user_query);
@@ -33,11 +40,14 @@
         <label for="title">Lastname</label>
         <input type="text" class="form-control" name="user_lastname" required>
     </div>
-    <select name="user_role" id="">
-        <option value="subscriber">Select Options</option>
-        <option value="admin">Admin</option>
-        <option value="subscriber">Subscriber</option>
-    </select>
+    <div class="form-group">
+        <label for="user_role">User role:</label>
+        <select name="user_role" id="user_role">
+            <option value="subscriber">Select Options</option>
+            <option value="admin">Admin</option>
+            <option value="subscriber">Subscriber</option>
+        </select>
+    </div>
 
     <!-- <div class="form-group">
         <label for="post_image">Post Image</label>

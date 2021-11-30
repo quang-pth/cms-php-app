@@ -14,6 +14,7 @@
             $user_email = $row['user_email'];
             $user_image = $row['user_image'];
             $user_role = $row['user_role'];
+            $randSalt = $row['randSalt'];
         }
     }
 
@@ -29,17 +30,26 @@
         $user_email = trim(preg_replace('/[^A-Za-z0-9@.\-]/', '', $_POST['user_email']));
         $user_password = santizeData($_POST['user_password']);
 
+        $query = "SELECT randSalt FROM users LIMIT 1";
+        $select_randsalt_query = mysqli_query($connection, $query);
+        confirmQuery($select_randsalt_query);
+        $row = mysqli_fetch_array($select_randsalt_query);
+        $salt = $row['randSalt'];
+        $hashed_password = crypt($user_password, $salt);
+
         $query = "UPDATE users SET ";
         $query .= "user_firstname = '{$user_firstname}', ";
         $query .= "user_lastname = '{$user_lastname}', ";
         $query .= "user_role = '{$user_role}', ";
         $query .= "username = '{$username}', ";
         $query .= "user_email = '{$user_email}', ";
-        $query .= "user_password = '{$user_password}' ";
+        $query .= "user_password = '{$hashed_password}' ";
         $query .= "WHERE user_id = {$user_id_to_edit}";
 
         $edit_user_query = mysqli_query($connection, $query);
         confirmQuery($edit_user_query);
+
+        header("Location: users.php?source=edit_user&edit_user={$user_id_to_edit}");
     }
 ?>
 
@@ -53,13 +63,14 @@
         <input type="text" class="form-control" name="user_lastname" value="<?php echo $user_lastname ?>">
     </div>
     <div class="form-group">
-        <select name="user_role" id="">
-            <option value="subscriber"><?php echo $user_role; ?></option>
+        <label for="user_role">User role:</label>
+        <select name="user_role" id="user_role">
+            <option value="<?php echo $user_role; ?>"><?php echo ucfirst($user_role); ?></option>
             <?php 
                 if($user_role == 'admin') {
-                    echo "<option value='subscriber'>subscriber</option>";
+                    echo "<option value='subscriber'>Subscriber</option>";
                 } else {
-                    echo "<option value='admin'>admin</option>";
+                    echo "<option value='admin'>Admin</option>";
                 }
             ?>
         </select>
@@ -79,7 +90,7 @@
     </div>
     <div class="form-group">
         <label for="">Password</label>
-        <input type="text" class="form-control" name="user_password" value="<?php echo $user_password ?>">
+        <input type="password" class="form-control" name="user_password" value="<?php echo $user_password ?>">
     </div>
     <div class="form-group">
         <input class="btn btn-primary" type="submit" name="edit_user" value="Update">
