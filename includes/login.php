@@ -1,4 +1,8 @@
-<?php include "db.php"; ?>
+<?php 
+    require '../vendor/autoload.php';
+    include "db.php"; 
+?>
+
 <?php include "../admin/functions.php" ?>
 <!-- turn on session to set logged in user's info -->
 <?php 

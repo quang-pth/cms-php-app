@@ -1,4 +1,5 @@
-<?php 
+<?php
+    require "../vendor/autoload.php";
     include "./includes/admin_header.php"
 ?>
 
