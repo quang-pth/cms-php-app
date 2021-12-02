@@ -2,7 +2,8 @@
     include "./admin/functions.php"
 ?>
 
-<?php 
+<?php
+    require 'vendor/autoload.php';
     include "includes/db.php";
 ?>
 
