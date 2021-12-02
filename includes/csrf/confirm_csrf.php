@@ -10,7 +10,7 @@
             echo "Potential CSRF Vulnerable";
         }
     } else {
-        echo "Nothing";
+        echo "Not Valid Request";
     }
 
     session_write_close();
