@@ -57,6 +57,86 @@ function deleteCategories() {
     }
 }
 
+function createPost() {
+    global $connection;
+    $hidden_token = $_POST['hidden_token'];
+    $isValid = confirmCSRF($hidden_token);
+    if ($isValid) {
+        $post_title = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['title']));
+        $post_author = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['author']));
+        $post_category_id = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_category']));
+        $post_status = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_status']));
+        
+        $post_image = $_FILES['image']['name'];
+        $post_image_temp = $_FILES['image']['tmp_name'];
+
+        $post_tags = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_tags']));
+        $post_content = mysqli_escape_string($connection, $_POST['post_content']);
+        // $post_date = date('d-m-y');
+        $post_comment_count = 0;
+
+        // store image 
+        move_uploaded_file($post_image_temp, "../images/$post_image");
+        $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status)";
+
+        $query .= " VALUES({$post_category_id}, '{$post_title}', '{$post_author}',  now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_comment_count}', '{$post_status}' )";
+
+        $create_post_query = mysqli_query($connection, $query);
+        confirmQuery($create_post_query);
+        // get lastest post id to redirect user
+        $created_post_id = mysqli_insert_id($connection);
+
+        echo "<p class='bg-success'>Post Created. <a href='../post.php?p_id={$created_post_id}'>View Post</a> or <a href='posts.php'>Edit More Posts</a> </p>";
+    } else {
+        die('NOT VALID SESSION, REQUEST FAILED!');
+    }
+}
+
+function updatePost($post_id_to_edit) {
+    global $connection;
+    $hidden_token = $_POST['hidden_token'];
+    $isValid = confirmCSRF($hidden_token);
+    if ($isValid) {
+        $post_title = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['title']));
+        $post_author = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['author']));
+        $post_category_id = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_category']));
+        $post_status = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_status']));
+        
+        $post_image = $_FILES['image']['name'];
+        $post_image_temp = $_FILES['image']['tmp_name'];
+
+        $post_tags = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_tags']));
+        $post_content = mysqli_escape_string($connection, $_POST['post_content']);
+
+        move_uploaded_file($post_image_temp, "../images/$post_image");
+        if(empty($post_image)) {
+            $query = "SELECT * FROM posts WHERE post_id = $post_id_to_edit";
+            $select_image = mysqli_query($connection, $query);
+            while ($row = mysqli_fetch_assoc($select_image)) {
+                $post_image = $row['post_image'];
+            }
+        }
+
+        $query = "UPDATE posts SET ";
+        $query .= "post_title = '{$post_title}', ";
+        $query .= "post_category_id = '{$post_category_id}', ";
+        $query .= "post_date = now(), ";
+        $query .= "post_author = '{$post_author}', ";
+        $query .= "post_status = '{$post_status}', ";
+        $query .= "post_tags = '{$post_tags}', ";
+        $query .= "post_content = '{$post_content}', ";
+        $query .= "post_image = '{$post_image}' ";
+        $query .= "WHERE post_id = {$post_id_to_edit}";
+
+        $update_post = mysqli_query($connection, $query);
+        confirmQuery($update_post);
+        
+        echo "<p class='bg-success'>Post Updated. <a href='../post.php?p_id={$post_id_to_edit}'>View Post</a> or <a href='posts.php'>Edit More Posts</a> </p>";
+    } else {
+        die('NOT VALID SESSION, REQUEST FAILED!');
+    }
+}
+
 function santizeData($data) {
     return trim(preg_replace('/[^A-Za-z0-9 @.\-]/', '', $data));
 }

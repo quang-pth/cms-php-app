@@ -1,34 +1,15 @@
+<?php 
+    include "../security/csrf/confirm_csrf.php";
+?>
+
 <?php
     if(isset($_POST['create_post'])) {
-        $post_title = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['title']));
-        $post_author = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['author']));
-        $post_category_id = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_category']));
-        $post_status = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_status']));
-        
-        $post_image = $_FILES['image']['name'];
-        $post_image_temp = $_FILES['image']['tmp_name'];
-
-        $post_tags = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_tags']));
-        $post_content = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_content']));
-        $post_date = date('d-m-y');
-        $post_comment_count = 0;
-
-        // store image 
-        move_uploaded_file($post_image_temp, "../images/$post_image");
-        $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status)";
-
-        $query .= " VALUES({$post_category_id}, '{$post_title}', '{$post_author}',  now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_comment_count}', '{$post_status}' )";
-
-        $create_post_query = mysqli_query($connection, $query);
-        confirmQuery($create_post_query);
-        // get lastest post id to redirect user
-        $created_post_id = mysqli_insert_id($connection);
-
-        echo "<p class='bg-success'>Post Created. <a href='../post.php?p_id={$created_post_id}'>View Post</a> or <a href='posts.php'>Edit More Posts</a> </p>";
+       createPost();
     }
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="hidden_token" value="<?php echo $_SESSION['user_token'] ?>">
     <div class="form-group">
         <label for="title">Post Title</label>
         <input type="text" class="form-control" name="title">

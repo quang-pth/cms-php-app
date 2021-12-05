@@ -46,7 +46,8 @@
 
                 $count = ceil($count / $per_page); // each page 5 posts
 
-                $query = "SELECT * FROM posts WHERE post_status = 'published' LIMIT $page_1, $per_page";
+                $query = "SELECT * FROM posts WHERE post_status = 'published' ORDER BY post_id DESC ";
+                $query .= "LIMIT $page_1, $per_page";
                 $select_all_posts_query = mysqli_query($connection, $query);
                     
                     while($row = mysqli_fetch_assoc($select_all_posts_query)) {

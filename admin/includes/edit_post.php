@@ -1,4 +1,8 @@
 <?php 
+    include "../security/csrf/confirm_csrf.php";
+?>
+
+<?php 
     if(isset($_GET['p_id'])) {
         $post_id_to_edit = preg_replace('/[^A-Za-z0-9 \-]/', '', $_GET['p_id']); // removes special characters in query id
     }
@@ -21,46 +25,13 @@
     }
 
     if(isset($_POST['update_post'])) {
-        $post_title = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['title']));
-        $post_author = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['author']));
-        $post_category_id = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_category']));
-        $post_status = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_status']));
-        
-        $post_image = $_FILES['image']['name'];
-        $post_image_temp = $_FILES['image']['tmp_name'];
-
-        $post_tags = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_tags']));
-        $post_content = preg_replace('/[^A-Za-z0-9 \-]/', '', trim($_POST['post_content']));
-
-        move_uploaded_file($post_image_temp, "../images/$post_image");
-        if(empty($post_image)) {
-            $query = "SELECT * FROM posts WHERE post_id = $post_id_to_edit";
-            $select_image = mysqli_query($connection, $query);
-            while ($row = mysqli_fetch_assoc($select_image)) {
-                $post_image = $row['post_image'];
-            }
-        }
-
-        $query = "UPDATE posts SET ";
-        $query .= "post_title = '{$post_title}', ";
-        $query .= "post_category_id = '{$post_category_id}', ";
-        $query .= "post_date = now(), ";
-        $query .= "post_author = '{$post_author}', ";
-        $query .= "post_status = '{$post_status}', ";
-        $query .= "post_tags = '{$post_tags}', ";
-        $query .= "post_content = '{$post_content}', ";
-        $query .= "post_image = '{$post_image}' ";
-        $query .= "WHERE post_id = {$post_id_to_edit}";
-
-        $update_post = mysqli_query($connection, $query);
-        confirmQuery($update_post);
-        
-        echo "<p class='bg-success'>Post Updated. <a href='../post.php?p_id={$post_id_to_edit}'>View Post</a> or <a href='posts.php'>Edit More Posts</a> </p>";
-    }   
+        updatePost($post_id_to_edit);
+   }   
 
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="hidden_token" value="<?php echo $_SESSION['user_token'] ?>">
     <div class="form-group">
         <label for="title">Post Title</label>
         <input type="text" class="form-control" name="title" value="<?php echo $post_title; ?>">
