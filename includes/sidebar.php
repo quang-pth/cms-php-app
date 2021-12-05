@@ -18,11 +18,12 @@
 
     <!-- Login Form -->
         <?php 
-            if(!isset($_SESSION['user_token'])) {
-                ?> 
+            if(!isset($_SESSION['username'])) {
+                ?>
                 <div class="well">
                     <h4>Login</h4>
                     <form action="includes/login.php" method="post">
+                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf'] ?>">
                         <div class="form-group">
                             <input name="username" type="text" class="form-control" placeholder="Enter Username">
                         </div>

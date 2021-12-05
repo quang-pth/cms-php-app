@@ -1,6 +1,6 @@
 <?php 
     require "../vendor/autoload.php";
-    include "./includes/admin_header.php"
+    include "./includes/admin_header.php";
 ?>
 
     <div id="wrapper">

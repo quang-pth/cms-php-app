@@ -9,7 +9,7 @@
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="hidden_token" value="<?php echo $_SESSION['user_token'] ?>">
+    <input type="hidden" name="hidden_token" value="<?php echo $_SESSION['csrf'] ?>">
     <div class="form-group">
         <label for="title">Post Title</label>
         <input type="text" class="form-control" name="title">

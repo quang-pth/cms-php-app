@@ -5,9 +5,11 @@
 
 <?php 
     include "includes/header.php";
-
 ?>
 
+<?php 
+    $_SESSION['csrf'] = md5(uniqid()); 
+?>
 <!-- Navigation -->
 <?php 
     include "includes/nav.php";

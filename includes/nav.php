@@ -32,7 +32,7 @@
                     <a href="registration.php">Registration</a>
                 </li>
                 <?php 
-                    if(isset($_SESSION['user_token'])) {
+                    if(isset($_SESSION['username'])) {
                         ?>
                         <li>
                             <a href="includes/logout.php">Logout</a>
