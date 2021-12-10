@@ -26,15 +26,7 @@
                 $email = mysqli_real_escape_string($connection, $email);
                 $password = mysqli_real_escape_string($connection, $password);
 
-                $query = "SELECT randSalt FROM users LIMIT 1";
-                $select_randsalt_query = mysqli_query($connection, $query);
-                confirmQuery($select_randsalt_query);
-
-                $row = mysqli_fetch_array($select_randsalt_query);
-                $salt = $row['randSalt'] ? $row['randSalt'] : '$2y$10$iusesomecrazystrings22';
-                
-                // encrypt password with salt
-                $password = crypt($password, $salt);
+                $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
                 
                 $query = "INSERT INTO users(username, user_email, user_password, user_firstname, user_lastname, user_image, user_role) ";
                 $query .= "VALUES ('{$username}', '{$email}', '{$password}',  '{$user_firstname}', '{$user_lastname}', 0, 'subscriber') ";
