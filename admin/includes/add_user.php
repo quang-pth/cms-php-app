@@ -11,12 +11,7 @@
         $user_email = trim(preg_replace('/[^A-Za-z0-9@.\-]/', '', $_POST['user_email']));
         $user_password = santizeData($_POST['user_password']);
 
-        $query = "SELECT randSalt FROM users LIMIT 1";
-        $select_randsalt_query = mysqli_query($connection, $query);
-        confirmQuery($select_randsalt_query);
-        $row = mysqli_fetch_array($select_randsalt_query);
-        $salt = $row['randSalt'];
-        $hashed_password = crypt($user_password, $salt);
+        $hashed_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
 
         // store image 
         // move_uploaded_file($post_image_temp, "../images/$post_image");

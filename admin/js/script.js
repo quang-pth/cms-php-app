@@ -13,11 +13,24 @@ $(document).ready(function () {
         this.checked = false
       })
     }
-  });
+  })
 
-  const div_box = "<div id='load-screen'><div id='loading'></div></div>";
-  $("body").prepend(div_box);
-  $('#load-screen').delay(300).fadeOut(300, function () {
-    $(this).remove();
-  }) 
-});
+  const div_box = "<div id='load-screen'><div id='loading'></div></div>"
+  $('body').prepend(div_box)
+  $('#load-screen')
+    .delay(300)
+    .fadeOut(300, function () {
+      $(this).remove()
+    })
+})
+
+function loadUserOnline() {
+  $.get('functions.php?onlineusers=result', function (data) {
+    console.log('data: ', data)
+    $('.user-online').text(data)
+  })
+}
+
+setInterval(function () {
+  loadUserOnline()
+}, 300)

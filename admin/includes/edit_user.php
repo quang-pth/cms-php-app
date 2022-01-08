@@ -30,12 +30,7 @@
         $user_email = trim(preg_replace('/[^A-Za-z0-9@.\-]/', '', $_POST['user_email']));
         $user_password = santizeData($_POST['user_password']);
 
-        $query = "SELECT randSalt FROM users LIMIT 1";
-        $select_randsalt_query = mysqli_query($connection, $query);
-        confirmQuery($select_randsalt_query);
-        $row = mysqli_fetch_array($select_randsalt_query);
-        $salt = $row['randSalt'];
-        $hashed_password = crypt($user_password, $salt);
+        $hashed_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));;
 
         $query = "UPDATE users SET ";
         $query .= "user_firstname = '{$user_firstname}', ";
@@ -90,7 +85,7 @@
     </div>
     <div class="form-group">
         <label for="">Password</label>
-        <input type="password" class="form-control" name="user_password" value="<?php echo $user_password ?>">
+        <input type="password" class="form-control" name="user_password" autocomplete="off" required>
     </div>
     <div class="form-group">
         <input class="btn btn-primary" type="submit" name="edit_user" value="Update">

@@ -75,7 +75,7 @@
                     $post_id = $_GET['p_id'];
                     $comment_author = santizeData($_POST['comment_author']); 
                     $comment_email = santizeData($_POST['comment_email']); 
-                    $comment_content = santizeData($_POST['comment_content']); 
+                    $comment_content = mysqli_escape_string($connection, $_POST['comment_content']); 
 
                     if(!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
                         $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
@@ -137,7 +137,9 @@
                                 <h4 class="media-heading"><?php echo $comment_author ?>
                                     <small><?php echo $comment_date ?></small>
                                 </h4>
-                                <?php echo $comment_content ?>
+                                <p>
+                                    <?php echo $comment_content ?>
+                                </p> 
                             </div>
                         </div>
 

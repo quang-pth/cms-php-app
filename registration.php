@@ -4,10 +4,14 @@
     include "includes/db.php"; 
 ?>
 
-<?php  include "includes/header.php"; ?>
+<?php  
+    include "includes/header.php";
+?>
 
 <?php 
     if(isset($_POST['submit'])) {
+        $user_firstname = $_POST['user_firstname']; 
+        $user_lastname = $_POST['user_lastname']; 
         $username = $_POST['username']; 
         $email = $_POST['email']; 
         $password = $_POST['password']; 
@@ -16,22 +20,16 @@
         $fieldsNotEmpty = !empty($username) && !empty($email) && !empty($password); 
         if($fieldsNotEmpty) {
             if($password === $confirm_password) {
+                $user_firstname = mysqli_real_escape_string($connection, $user_firstname);
+                $user_lastname = mysqli_real_escape_string($connection, $user_lastname);
                 $username = mysqli_real_escape_string($connection, $username);
                 $email = mysqli_real_escape_string($connection, $email);
                 $password = mysqli_real_escape_string($connection, $password);
 
-                $query = "SELECT randSalt FROM users LIMIT 1";
-                $select_randsalt_query = mysqli_query($connection, $query);
-                confirmQuery($select_randsalt_query);
-
-                $row = mysqli_fetch_array($select_randsalt_query);
-                $salt = $row['randSalt'] ? $row['randSalt'] : '$2y$10$iusesomecrazystrings22';
+                $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
                 
-                // encrypt password with salt
-                $password = crypt($password, $salt);
-                
-                $query = "INSERT INTO users(username, user_email, user_password, user_role) ";
-                $query .= "VALUES ('{$username}', '{$email}', '{$password}', 'subscriber') ";
+                $query = "INSERT INTO users(username, user_email, user_password, user_firstname, user_lastname, user_image, user_role) ";
+                $query .= "VALUES ('{$username}', '{$email}', '{$password}',  '{$user_firstname}', '{$user_lastname}', 0, 'subscriber') ";
                 $register_user_query = mysqli_query($connection, $query);
                 confirmQuery($register_user_query);
                 
@@ -64,6 +62,14 @@
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
                         <h6 class="text-center"><?php echo $message ?></h6>
                         <div class="form-group">
+                            <label for="firstname" class="sr-only">First Name</label>
+                            <input type="text" name="user_firstname" id="firstname" class="form-control" placeholder="Enter Desired Firstname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname" class="sr-only">Last Name</label>
+                            <input type="text" name="user_lastname" id="lastname" class="form-control" placeholder="Enter Desired Lastname" required>
+                        </div>
+                        <div class="form-group">
                             <label for="username" class="sr-only">username</label>
                             <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username" required>
                         </div>
@@ -90,7 +96,7 @@
 </section>
 
 
-        <hr>
+<hr>
 
 
 
