@@ -85,7 +85,18 @@ function deleteCategories() {
         if (!$delete_query) {
             die('QUERY FAILED'. mysqli_error($connection));
         }
+        // delete related-category post
+        deletePost($cat_id_to_delete);
         header("Location: categories.php"); // refresh page
+    }
+}
+
+function deletePost($cate_id) {
+    global $connection;
+    $query = "DELETE FROM posts WHERE post_category_id = {$cate_id}";
+    $delete_post_query = mysqli_query($connection, $query);
+    if(!$delete_post_query) {
+        die('QUERY FAILED'. mysqli_error($connection));
     }
 }
 

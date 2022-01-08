@@ -67,7 +67,7 @@
                         </div>
                         <div class="form-group">
                             <label for="lastname" class="sr-only">Last Name</label>
-                            <input type="text" name="user_lastname" id="lastname" class="form-control" placeholder="Enter Desired Username" required>
+                            <input type="text" name="user_lastname" id="lastname" class="form-control" placeholder="Enter Desired Lastname" required>
                         </div>
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
@@ -96,7 +96,7 @@
 </section>
 
 
-        <hr>
+<hr>
 
 
 

@@ -43,7 +43,12 @@
                 $_SESSION['lastname'] = $db_user_lastname;
                 $_SESSION['user_role'] = $db_user_role;
                 $_SESSION['csrf'] = md5(uniqid());
-                header("Location: ../admin");
+
+                if($_SESSION['user_role'] === 'admin') {
+                    header("Location: ../admin");
+                } else {
+                    header("Location: ../index.php");
+                }
             } else {
                 header("Location: ../index.php");
             }
