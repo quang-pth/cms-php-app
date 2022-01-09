@@ -24,12 +24,6 @@
 
         <!-- Blog Entries Column -->
         <div class="col-md-8">
-
-            <h1 class="page-header">
-                Page Heading
-                <small>Secondary Text</small>
-            </h1>
-
             <!-- First Blog Post -->
             <?php 
                 if(isset($_GET['p_id'])) {
@@ -48,7 +42,11 @@
                         $post_date = $row['post_date'];
                         $post_image = $row['post_image'];
                         $post_content = $row['post_content'];
-                        ?>         
+                        ?>    
+                        <h1 class="page-header">
+                            <?php echo $post_author ?> posts 
+                            <small>Enjoy your time</small>
+                        </h1>     
                         <h2>
                             <a href="#"><?php echo $post_title ?></a>
                         </h2>

@@ -12,10 +12,10 @@
     <input type="hidden" name="hidden_token" value="<?php echo $_SESSION['csrf'] ?>">
     <div class="form-group">
         <label for="title">Post Title</label>
-        <input type="text" class="form-control" name="title">
+        <input type="text" class="form-control" name="title" required>
     </div>
     <div class="form-group">
-        <select name="post_category" id="post_category">
+        <select name="post_category" id="post_category" required>
             <?php 
                 $query = "SELECT * FROM categories";
                 $select_categories = mysqli_query($connection, $query);
@@ -31,11 +31,11 @@
     </div>
     <div class="form-group">
         <label for="post_author">Post Author</label>
-        <input type="text" class="form-control" name="author">
+        <input type="text" class="form-control" name="author" required>
     </div>
     <div class="form-group">
         <label for="post_status">Post Status: </label>
-        <select name="post_status" id="post_status">
+        <select name="post_status" id="post_status" required>
             <option value="draft" selected disabled>Selection Options</option>
             <option value="published">Publish</option>
             <option value="draft">Draft</option>
@@ -43,15 +43,15 @@
     </div>
     <div class="form-group">
         <label for="post_image">Post Image</label>
-        <input type="file" name="image">
+        <input type="file" name="image" required>
     </div>
     <div class="form-group">
         <label for="post_author">Post Tags</label>
-        <input type="text" class="form-control" name="post_tags">
+        <input type="text" class="form-control" name="post_tags" required>
     </div>
     <div class="form-group">
         <label for="summernote">Post Content</label>
-        <textarea class="form-control" name="post_content" id="summernote" cols="30" rows="10"></textarea>
+        <textarea class="form-control" name="post_content" id="summernote" cols="30" rows="10" required></textarea>
     </div>
     <div class="form-group">
         <input class="btn btn-primary" type="submit" name="create_post" value="Publish Post">
