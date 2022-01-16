@@ -29,9 +29,7 @@
     </div>
     <div class="form-group">
         <label for="">Content</label>
-        <textarea class="form-control" name="message_content" id="" cols="30" rows="10" disabled>
-            <?php echo $message_content; ?>
-        </textarea>
+        <textarea class="form-control" name="message_content" id="" cols="30" rows="10" disabled><?php echo $message_content; ?></textarea>
     </div>
     <!-- <div class="form-group">
         <input class="btn btn-primary" type="submit" name="edit_user" value="Update">

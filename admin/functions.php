@@ -1,5 +1,4 @@
 <?php 
-
 function users_online() {
     if(isset($_GET['onlineusers'])) {        
         global $connection;    

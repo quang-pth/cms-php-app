@@ -1,6 +1,9 @@
 <?php 
     session_start();
 ?>
+<?php 
+    include "db.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +29,6 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="js/jquery.js"></script>
-    <script src="js/script.js"></script>
 </head>
 
 <body>

@@ -1,7 +1,9 @@
 function loadUserOnline() {
-  $.get('functions.php?users_online=result', function (data) {
+  $.get('functions.php?onlineusers=result', function (data) {
     console.log(data)
   })
 }
 
-loadUserOnline()
+setInterval(function () {
+  loadUserOnline()
+}, 300)

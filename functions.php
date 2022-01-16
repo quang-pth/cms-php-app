@@ -5,12 +5,11 @@ function users_online() {
 
         if(!$connection) {
             session_start();
+            require("vendor/autoload.php");
             include("includes/db.php");
             
             $session = session_id();
             $time = time();
-            $time_out_in_seconds = 5;
-            $time_out = $time - $time_out_in_seconds;
 
             $query = "SELECT * FROM users_online WHERE session = '$session' ";
             $send_query = mysqli_query($connection, $query);
@@ -23,10 +22,16 @@ function users_online() {
                 mysqli_query($connection, "UPDATE users_online SET time = '$time' WHERE session = '$session'");
             }
             
-            $user_online_query = mysqli_query($connection, "SELECT * FROM users_online WHERE time > '$time_out' ");
-            echo mysqli_num_rows($user_online_query);
+           echo $session;
         }
     } // end GET onlineusers
 }
 
 users_online();
+
+function confirmQuery($query_result) {
+    global $connection;
+    if(!$query_result) {
+            die("QUERY FAILED" . mysqli_errno($connection));
+    }
+}

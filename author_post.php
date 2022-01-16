@@ -4,7 +4,6 @@
 
 <?php
     require 'vendor/autoload.php';
-    include "includes/db.php";
 ?>
 
 <?php 
@@ -40,6 +39,7 @@
                     $select_post_query = mysqli_query($connection, $query);
                     confirmQuery($select_post_query);
                     while($row = mysqli_fetch_assoc($select_post_query)) {
+                        $post_id = $row['post_id'];
                         $post_title = $row['post_title'];
                         $post_author = $row['post_author'];
                         $post_date = $row['post_date'];
@@ -47,7 +47,7 @@
                         $post_content = $row['post_content'];
                         ?>         
                         <h2>
-                            <a href="#"><?php echo $post_title ?></a>
+                            <a href="post.php?p_id=<?php echo $post_id ?>"><?php echo $post_title ?></a>
                         </h2>
                         <p><span class="glyphicon glyphicon-time"></span> 
                         <?php echo $post_date ?></p>
